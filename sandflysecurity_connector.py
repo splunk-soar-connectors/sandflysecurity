@@ -8,7 +8,7 @@
 from __future__ import print_function, unicode_literals
 
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 
 # Phantom App imports
 import phantom.app as phantom
@@ -225,12 +225,12 @@ class SandflySecurityConnector(BaseConnector):
             if f == 'splunk_connector':
                 b_valid_license = True
 
-        if b_is_expired == True:
+        if b_is_expired is True:
             self.save_progress("ERROR: License Expired")
             summary['license_status'] = "Expired"
             return action_result.set_status(phantom.APP_ERROR, "License Expired")
 
-        if b_valid_license == False:
+        if b_valid_license is False:
             self.save_progress("ERROR: Invalid License")
             summary['license_status'] = "Invalid"
             return action_result.set_status(phantom.APP_ERROR, "Invalid License")
@@ -298,11 +298,11 @@ class SandflySecurityConnector(BaseConnector):
             # self.save_progress("{} | {}".format(ip_hostname, the_name))
             if last_ip == ip_hostname:
                 my_host_id = the_id
-                #self.save_progress("last_ip match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
-                break;
+                # self.save_progress("last_ip match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
             if the_name == ip_hostname:
                 my_host_id = the_id
-                #self.save_progress("the_name match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                # self.save_progress("the_name match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
                 break
 
         # self.save_progress("ip_hostname: {}\nhost_id: {}".format(ip_hostname, my_host_id))
