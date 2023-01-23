@@ -60,7 +60,7 @@ class SandflySecurityConnector(BaseConnector):
             split_lines = error_text.split('\n')
             split_lines = [x.strip() for x in split_lines if x.strip()]
             error_text = '\n'.join(split_lines)
-        except:
+        except Exception:
             error_text = "Cannot parse error details"
 
         message = "Status Code: {0}. Data from server:\n{1}\n".format(status_code, error_text)
@@ -182,7 +182,7 @@ class SandflySecurityConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             # the call to the 3rd party device or service failed, action result should contain all the error details
             # for now the return is commented out, but after implementation, return from here
-            self.save_progress("Test Connectivity Failed.")
+            self.save_progress("Test Connectivity Failed")
             return action_result.get_status()
 
         # Add a dictionary that is made up of the most important values from data into the summary
@@ -308,7 +308,7 @@ class SandflySecurityConnector(BaseConnector):
         # self.save_progress("ip_hostname: {}\nhost_id: {}".format(ip_hostname, my_host_id))
 
         if my_host_id is None:
-            return action_result.set_status(phantom.APP_ERROR, "IP/Hostname [{}] not found.".format(ip_hostname))
+            return action_result.set_status(phantom.APP_ERROR, "IP/Hostname [{}] not found".format(ip_hostname))
 
         headers = dict()
         headers['Accept'] = 'application/json'
@@ -350,7 +350,7 @@ class SandflySecurityConnector(BaseConnector):
         # self.save_progress(t_sandfly_list)
 
         if len(t_sandfly_list) == 0:
-            return action_result.set_status(phantom.APP_ERROR, "No Sandflies selected for scanning.")
+            return action_result.set_status(phantom.APP_ERROR, "No Sandflies selected for scanning")
 
         # make rest call
         t_host_ids = [my_host_id]
@@ -367,7 +367,7 @@ class SandflySecurityConnector(BaseConnector):
             # for now the return is commented out, but after implementation, return from here
             return action_result.get_status()
 
-        # self.save_progress(json.dumps(response))
+        self.save_progress(json.dumps(response))
 
         # Add the response into the data section
         action_result.add_data(scan_payload)
