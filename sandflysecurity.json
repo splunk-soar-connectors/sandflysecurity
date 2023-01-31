@@ -74,72 +74,63 @@
                     "required": true,
                     "order": 0,
                     "name": "ip_hostname",
-                    "id": 1,
-                    "param_name": "ip_hostname"
+                    "id": 1
                 },
                 "directory": {
                     "description": "Sandfly Type - directory",
                     "data_type": "boolean",
                     "order": 1,
                     "name": "directory",
-                    "id": 2,
-                    "param_name": "directory"
+                    "id": 2
                 },
                 "file": {
                     "description": "Sandfly Type - file",
                     "data_type": "boolean",
                     "order": 2,
                     "name": "file",
-                    "id": 3,
-                    "param_name": "file"
+                    "id": 3
                 },
                 "incident": {
                     "description": "Sandfly Type - incident",
                     "data_type": "boolean",
                     "order": 3,
                     "name": "incident",
-                    "id": 4,
-                    "param_name": "incident"
+                    "id": 4
                 },
                 "log": {
                     "description": "Sandfly Type - log",
                     "data_type": "boolean",
                     "order": 4,
                     "name": "log",
-                    "id": 5,
-                    "param_name": "log"
+                    "id": 5
                 },
                 "policy": {
                     "description": "Sandfly Type - policy",
                     "data_type": "boolean",
                     "order": 5,
                     "name": "policy",
-                    "id": 6,
-                    "param_name": "policy"
+                    "id": 6
                 },
                 "process": {
                     "description": "Sandfly Type - process",
                     "data_type": "boolean",
                     "order": 6,
                     "name": "process",
-                    "id": 7,
-                    "param_name": "process"
+                    "id": 7
                 },
                 "recon": {
                     "description": "Sandfly Type - recon",
                     "data_type": "boolean",
                     "order": 7,
                     "name": "recon",
-                    "id": 8,
-                    "param_name": "recon"
+                    "id": 8
                 },
                 "user": {
                     "description": "Sandfly Type - user",
                     "data_type": "boolean",
                     "order": 8,
                     "name": "user",
-                    "id": 9,
-                    "param_name": "user"
+                    "id": 9
                 }
             },
             "output": [
