@@ -1,4 +1,1 @@
 **Unreleased**
-
-* Initial Release
-* Added support for 'scan host' action

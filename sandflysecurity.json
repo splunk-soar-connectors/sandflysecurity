@@ -16,7 +16,7 @@
         }
     ],
     "license": "Copyright (c) Sandfly Security, Ltd., 2023",
-    "app_version": "1.0.0",
+    "app_version": "1.0.1",
     "utctime_updated": "2023-01-09T13:06:58.864704Z",
     "package_name": "phantom_sandflysecurity",
     "main_module": "sandflysecurity_connector.py",
