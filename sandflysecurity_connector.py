@@ -170,7 +170,7 @@ class SandflySecurityConnector(BaseConnector):
         # Also typically it does not add any data into an action_result either.
         # The status and progress messages are more important.
 
-        self.save_progress("_handle_test_connectivity")
+        # self.save_progress("_handle_test_connectivity")
 
         # make rest call
         headers = dict()
@@ -193,6 +193,7 @@ class SandflySecurityConnector(BaseConnector):
         summary = action_result.update_summary({})
         summary['version'] = response['version']
         summary['build_date'] = response['build_date']
+        self.save_progress('Sandfly Server Version: {}'.format(response['version']))
 
         # Next get the Sandfly Server license information
         ret_val, response = self._make_rest_call(
@@ -211,11 +212,11 @@ class SandflySecurityConnector(BaseConnector):
         # self.save_progress(json.dumps(response, indent=4, sort_keys=True))
 
         t_customer = response['customer']
-        # self.save_progress('Customer Name: {}'.format(t_customer['name']))
+        self.save_progress('Customer Name: {}'.format(t_customer['name']))
         summary['customer_name'] = t_customer['name']
 
         t_date = response['date']
-        # self.save_progress('Expiration Date: {}'.format(t_date['expiry']))
+        self.save_progress('Expiration Date: {}'.format(t_date['expiry']))
         summary['expiration_date'] = t_date['expiry']
 
         t_expiry = datetime.strptime( t_date['expiry'], "%Y-%m-%dT%H:%M:%SZ" )
@@ -240,6 +241,7 @@ class SandflySecurityConnector(BaseConnector):
             return action_result.set_status(phantom.APP_ERROR, "Invalid License")
 
         summary['license_status'] = 'Valid'
+        self.save_progress('Splunk Connector License: {}'.format(summary['license_status']))
 
         # Return success
         self.save_progress("Test Connectivity Passed")
