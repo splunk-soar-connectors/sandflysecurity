@@ -1,7 +1,7 @@
 {
-    "appid": "2b671b5f-93c6-4173-9350-045d0b746ae9",
+    "appid": "3a2fa34b-3b40-47b1-8d9e-a60bbfef1d8d",
     "name": "Sandfly Security",
-    "description": "Sandfly Security app to trigger system scans and other actions on the Sandfly Server",
+    "description": "Sandfly Security app to gather information, initiate system scans and other actions on the Sandfly Server",
     "type": "endpoint",
     "product_vendor": "Sandfly Security",
     "logo": "logo_sandflysecurity.svg",
@@ -16,8 +16,8 @@
         }
     ],
     "license": "Copyright (c) Sandfly Security, Ltd., 2023",
-    "app_version": "1.0.1",
-    "utctime_updated": "2023-01-09T13:06:58.864704Z",
+    "app_version": "1.1.1",
+    "utctime_updated": "2023-02-25T15:22:20.505537Z",
     "package_name": "phantom_sandflysecurity",
     "main_module": "sandflysecurity_connector.py",
     "min_phantom_version": "5.4.0",
@@ -254,11 +254,11 @@
         ]
     },
     "custom_made": true,
-    "directory": "sandflysecurity_2b671b5f-93c6-4173-9350-045d0b746ae9",
+    "directory": "sandflysecurity_3a2fa34b-3b40-47b1-8d9e-a60bbfef1d8d",
     "version": 1,
     "appname": "-",
     "executable": "spawn3",
     "disabled": false,
-    "copied_from_id": 169,
-    "copied_from_version": "1.0.0"
+    "copied_from_id": 183,
+    "copied_from_version": "1.0.1"
 }
