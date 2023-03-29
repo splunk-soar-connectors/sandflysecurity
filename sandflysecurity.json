@@ -70,73 +70,55 @@
                     "data_type": "string",
                     "required": true,
                     "order": 0,
-                    "name": "ip_hostname",
-                    "id": 1,
-                    "param_name": "ip_hostname"
+                    "name": "ip_hostname"
                 },
                 "directory": {
                     "description": "Sandfly Type - directory",
                     "data_type": "boolean",
                     "order": 1,
-                    "name": "directory",
-                    "id": 2,
-                    "param_name": "directory"
+                    "name": "directory"
                 },
                 "file": {
                     "description": "Sandfly Type - file",
                     "data_type": "boolean",
                     "order": 2,
-                    "name": "file",
-                    "id": 3,
-                    "param_name": "file"
+                    "name": "file"
                 },
                 "incident": {
                     "description": "Sandfly Type - incident",
                     "data_type": "boolean",
                     "order": 3,
-                    "name": "incident",
-                    "id": 4,
-                    "param_name": "incident"
+                    "name": "incident"
                 },
                 "log": {
                     "description": "Sandfly Type - log",
                     "data_type": "boolean",
                     "order": 4,
-                    "name": "log",
-                    "id": 5,
-                    "param_name": "log"
+                    "name": "log"
                 },
                 "policy": {
                     "description": "Sandfly Type - policy",
                     "data_type": "boolean",
                     "order": 5,
-                    "name": "policy",
-                    "id": 6,
-                    "param_name": "policy"
+                    "name": "policy"
                 },
                 "process": {
                     "description": "Sandfly Type - process",
                     "data_type": "boolean",
                     "order": 6,
-                    "name": "process",
-                    "id": 7,
-                    "param_name": "process"
+                    "name": "process"
                 },
                 "recon": {
                     "description": "Sandfly Type - recon",
                     "data_type": "boolean",
                     "order": 7,
-                    "name": "recon",
-                    "id": 8,
-                    "param_name": "recon"
+                    "name": "recon"
                 },
                 "user": {
                     "description": "Sandfly Type - user",
                     "data_type": "boolean",
                     "order": 8,
-                    "name": "user",
-                    "id": 9,
-                    "param_name": "user"
+                    "name": "user"
                 }
             },
             "output": [{
@@ -234,9 +216,7 @@
                     "data_type": "string",
                     "required": true,
                     "order": 0,
-                    "name": "ip_hostname",
-                    "id": 1,
-                    "param_name": "ip_hostname"
+                    "name": "ip_hostname"
                 }
             },
             "output": [{
@@ -286,9 +266,7 @@
                     "data_type": "string",
                     "required": true,
                     "order": 0,
-                    "name": "ip_hostname",
-                    "id": 1,
-                    "param_name": "ip_hostname"
+                    "name": "ip_hostname"
                 }
             },
             "output": [{
@@ -338,9 +316,7 @@
                     "data_type": "string",
                     "required": true,
                     "order": 0,
-                    "name": "ip_hostname",
-                    "id": 1,
-                    "param_name": "ip_hostname"
+                    "name": "ip_hostname"
                 }
             },
             "output": [{
@@ -390,9 +366,7 @@
                     "data_type": "string",
                     "required": true,
                     "order": 0,
-                    "name": "ip_hostname",
-                    "id": 1,
-                    "param_name": "ip_hostname"
+                    "name": "ip_hostname"
                 }
             },
             "output": [{
@@ -442,9 +416,7 @@
                     "data_type": "string",
                     "required": true,
                     "order": 0,
-                    "name": "ip_hostname",
-                    "id": 1,
-                    "param_name": "ip_hostname"
+                    "name": "ip_hostname"
                 }
             },
             "output": [{
@@ -494,9 +466,7 @@
                     "data_type": "string",
                     "required": true,
                     "order": 0,
-                    "name": "ip_hostname",
-                    "id": 1,
-                    "param_name": "ip_hostname"
+                    "name": "ip_hostname"
                 }
             },
             "output": [{
@@ -546,9 +516,7 @@
                     "data_type": "string",
                     "required": true,
                     "order": 0,
-                    "name": "ip_hostname",
-                    "id": 1,
-                    "param_name": "ip_hostname"
+                    "name": "ip_hostname"
                 }
             },
             "output": [{
