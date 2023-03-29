@@ -10,9 +10,11 @@
     "python_version": "3",
     "product_version_regex": ".*",
     "publisher": "Sandfly Security, Ltd.",
-    "contributors": [{
-        "name": "Steven Snapp"
-    }],
+    "contributors": [
+        {
+            "name": "Steven Snapp"
+        }
+    ],
     "license": "Copyright (c) Sandfly Security, Ltd., 2023",
     "app_version": "1.2.0",
     "utctime_updated": "2023-02-25T15:22:20.505537Z",
@@ -47,7 +49,8 @@
             "id": 2
         }
     },
-    "actions": [{
+    "actions": [
+        {
             "action": "test connectivity",
             "identifier": "test_connectivity",
             "description": "Validate the asset configuration for connectivity using supplied configuration",
@@ -175,7 +178,8 @@
                     "param_name": "user"
                 }
             },
-            "output": [{
+            "output": [
+                {
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -284,7 +288,8 @@
                     "param_name": "ip_hostname"
                 }
             },
-            "output": [{
+            "output": [
+                {
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -337,7 +342,8 @@
                     "param_name": "ip_hostname"
                 }
             },
-            "output": [{
+            "output": [
+                {
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -390,7 +396,8 @@
                     "param_name": "ip_hostname"
                 }
             },
-            "output": [{
+            "output": [
+                {
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -443,7 +450,8 @@
                     "param_name": "ip_hostname"
                 }
             },
-            "output": [{
+            "output": [
+                {
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -496,7 +504,8 @@
                     "param_name": "ip_hostname"
                 }
             },
-            "output": [{
+            "output": [
+                {
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -549,7 +558,8 @@
                     "param_name": "ip_hostname"
                 }
             },
-            "output": [{
+            "output": [
+                {
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -602,7 +612,8 @@
                     "param_name": "ip_hostname"
                 }
             },
-            "output": [{
+            "output": [
+                {
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -635,7 +646,8 @@
         }
     ],
     "pip_dependencies": {
-        "wheel": [{
+        "wheel": [
+            {
                 "module": "beautifulsoup4",
                 "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
             },
@@ -661,7 +673,7 @@
             },
             {
                 "module": "urllib3",
-                "input_file": "wheels/shared/urllib3-1.26.14-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/urllib3-1.26.15-py2.py3-none-any.whl"
             }
         ]
     },
@@ -672,5 +684,37 @@
     "executable": "spawn3",
     "disabled": false,
     "copied_from_id": 183,
-    "copied_from_version": "1.0.1"
+    "copied_from_version": "1.0.1",
+    "pip39_dependencies": {
+        "wheel": [
+            {
+                "module": "beautifulsoup4",
+                "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
+            },
+            {
+                "module": "certifi",
+                "input_file": "wheels/py3/certifi-2022.12.7-py3-none-any.whl"
+            },
+            {
+                "module": "chardet",
+                "input_file": "wheels/shared/chardet-3.0.4-py2.py3-none-any.whl"
+            },
+            {
+                "module": "idna",
+                "input_file": "wheels/shared/idna-2.10-py2.py3-none-any.whl"
+            },
+            {
+                "module": "requests",
+                "input_file": "wheels/shared/requests-2.25.0-py2.py3-none-any.whl"
+            },
+            {
+                "module": "soupsieve",
+                "input_file": "wheels/py3/soupsieve-2.4-py3-none-any.whl"
+            },
+            {
+                "module": "urllib3",
+                "input_file": "wheels/shared/urllib3-1.26.15-py2.py3-none-any.whl"
+            }
+        ]
+    }
 }
