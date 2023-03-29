@@ -10,17 +10,15 @@
     "python_version": "3",
     "product_version_regex": ".*",
     "publisher": "Sandfly Security, Ltd.",
-    "contributors": [
-        {
-            "name": "Steven Snapp"
-        }
-    ],
+    "contributors": [{
+        "name": "Steven Snapp"
+    }],
     "license": "Copyright (c) Sandfly Security, Ltd., 2023",
-    "app_version": "1.1.1",
+    "app_version": "1.2.0",
     "utctime_updated": "2023-02-25T15:22:20.505537Z",
     "package_name": "phantom_sandflysecurity",
     "main_module": "sandflysecurity_connector.py",
-    "min_phantom_version": "5.4.0",
+    "min_phantom_version": "5.5.0",
     "fips_compliant": false,
     "app_wizard_version": "1.0.0",
     "configuration": {
@@ -49,8 +47,7 @@
             "id": 2
         }
     },
-    "actions": [
-        {
+    "actions": [{
             "action": "test connectivity",
             "identifier": "test_connectivity",
             "description": "Validate the asset configuration for connectivity using supplied configuration",
@@ -178,8 +175,7 @@
                     "param_name": "user"
                 }
             },
-            "output": [
-                {
+            "output": [{
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -288,8 +284,7 @@
                     "param_name": "ip_hostname"
                 }
             },
-            "output": [
-                {
+            "output": [{
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -342,8 +337,7 @@
                     "param_name": "ip_hostname"
                 }
             },
-            "output": [
-                {
+            "output": [{
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -396,8 +390,7 @@
                     "param_name": "ip_hostname"
                 }
             },
-            "output": [
-                {
+            "output": [{
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -450,8 +443,7 @@
                     "param_name": "ip_hostname"
                 }
             },
-            "output": [
-                {
+            "output": [{
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -504,8 +496,7 @@
                     "param_name": "ip_hostname"
                 }
             },
-            "output": [
-                {
+            "output": [{
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -558,8 +549,7 @@
                     "param_name": "ip_hostname"
                 }
             },
-            "output": [
-                {
+            "output": [{
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -612,8 +602,7 @@
                     "param_name": "ip_hostname"
                 }
             },
-            "output": [
-                {
+            "output": [{
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
                     "contains": [],
@@ -646,8 +635,7 @@
         }
     ],
     "pip_dependencies": {
-        "wheel": [
-            {
+        "wheel": [{
                 "module": "beautifulsoup4",
                 "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
             },
