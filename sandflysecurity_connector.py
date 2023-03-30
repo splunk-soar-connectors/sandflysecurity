@@ -1,8 +1,23 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-# -----------------------------------------
-# Phantom sample App Connector python file
-# -----------------------------------------
+# File: sandflysecurity_connector.py
+#
+# Copyright (c) Sandfly Security, Ltd., 2023
+#
+# This unpublished material is proprietary to Recorded Future. All
+# rights reserved. The methods and techniques described herein are
+# considered trade secrets and/or confidential. Reproduction or
+# distribution, in whole or in part, is forbidden except by express
+# written permission of Recorded Future.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software distributed under
+# the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied. See the License for the specific language governing permissions
+# and limitations under the License.
 
 # Python 3 Compatibility imports
 from __future__ import print_function, unicode_literals
@@ -170,7 +185,7 @@ class SandflySecurityConnector(BaseConnector):
         # Also typically it does not add any data into an action_result either.
         # The status and progress messages are more important.
 
-        self.save_progress("_handle_test_connectivity")
+        # self.save_progress("_handle_test_connectivity")
 
         # make rest call
         headers = dict()
@@ -193,6 +208,7 @@ class SandflySecurityConnector(BaseConnector):
         summary = action_result.update_summary({})
         summary['version'] = response['version']
         summary['build_date'] = response['build_date']
+        self.save_progress('Sandfly Server Version: {}'.format(response['version']))
 
         # Next get the Sandfly Server license information
         ret_val, response = self._make_rest_call(
@@ -211,11 +227,11 @@ class SandflySecurityConnector(BaseConnector):
         # self.save_progress(json.dumps(response, indent=4, sort_keys=True))
 
         t_customer = response['customer']
-        # self.save_progress('Customer Name: {}'.format(t_customer['name']))
+        self.save_progress('Customer Name: {}'.format(t_customer['name']))
         summary['customer_name'] = t_customer['name']
 
         t_date = response['date']
-        # self.save_progress('Expiration Date: {}'.format(t_date['expiry']))
+        self.save_progress('Expiration Date: {}'.format(t_date['expiry']))
         summary['expiration_date'] = t_date['expiry']
 
         t_expiry = datetime.strptime( t_date['expiry'], "%Y-%m-%dT%H:%M:%SZ" )
@@ -240,6 +256,7 @@ class SandflySecurityConnector(BaseConnector):
             return action_result.set_status(phantom.APP_ERROR, "Invalid License")
 
         summary['license_status'] = 'Valid'
+        self.save_progress('Splunk Connector License: {}'.format(summary['license_status']))
 
         # Return success
         self.save_progress("Test Connectivity Passed")
@@ -388,6 +405,846 @@ class SandflySecurityConnector(BaseConnector):
         # For now return Error with a message, in case of success we don't set the message, but use the summary
         # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
 
+    def _handle_sandfly_full_investigation(self, param):
+        # Implement the handler here
+        # use self.save_progress(...) to send progress messages back to the platform
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
+
+        # Add an action result object to self (BaseConnector) to represent the action for this param
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # Access action parameters passed in the 'param' dictionary
+
+        # Required values can be accessed directly
+        ip_hostname = param['ip_hostname']
+
+        # Optional values should use the .get() function
+
+        # make rest call
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        myparams = dict()
+        myparams['summary'] = 'true'
+
+        ret_val, response = self._make_rest_call(
+            '/hosts', action_result, params=myparams, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        # self.save_progress(json.dumps(response, indent=4, sort_keys=True))
+
+        my_host_id = None
+
+        data_list = response['data']
+        for item in data_list:
+            the_name = item['hostname']
+            last_ip = item['last_seen_ip_addr']
+            the_id = item['host_id']
+            # self.save_progress("{} | {}".format(ip_hostname, the_name))
+            if last_ip == ip_hostname:
+                my_host_id = the_id
+                # self.save_progress("last_ip match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
+            if the_name == ip_hostname:
+                my_host_id = the_id
+                # self.save_progress("the_name match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
+
+        # self.save_progress("ip_hostname: {}\nhost_id: {}".format(ip_hostname, my_host_id))
+
+        if my_host_id is None:
+            return action_result.set_status(phantom.APP_ERROR, "IP/Hostname [{}] not found".format(ip_hostname))
+
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        ret_val, response = self._make_rest_call(
+            '/sandflies', action_result, params=None, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        data_list = response['data']
+
+        t_sandfly_list = []
+        for item in data_list:
+            if item['active'] is True:
+                if item['type'] == 'directory':
+                    t_sandfly_list.append(item['id'])
+                if item['type'] == 'file':
+                    t_sandfly_list.append(item['id'])
+                if item['type'] == 'incident':
+                    t_sandfly_list.append(item['id'])
+                if item['type'] == 'log':
+                    t_sandfly_list.append(item['id'])
+                if item['type'] == 'policy':
+                    t_sandfly_list.append(item['id'])
+                if item['type'] == 'process':
+                    t_sandfly_list.append(item['id'])
+                if item['type'] == 'recon':
+                    t_sandfly_list.append(item['id'])
+                if item['type'] == 'user':
+                    t_sandfly_list.append(item['id'])
+
+        # self.save_progress(t_sandfly_list)
+
+        if len(t_sandfly_list) == 0:
+            return action_result.set_status(phantom.APP_ERROR, "No Sandflies selected for scanning")
+
+        # make rest call
+        t_host_ids = [my_host_id]
+        scan_payload = { "host_ids": t_host_ids, "sandfly_list": t_sandfly_list }
+
+        # self.save_progress(json.dumps(scan_payload))
+
+        ret_val, response = self._make_rest_call(
+            '/scan', action_result, method="post", data=json.dumps(scan_payload), headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        self.save_progress(json.dumps(response))
+
+        # Add the response into the data section
+        action_result.add_data(scan_payload)
+        action_result.add_data(response)
+
+        # Add a dictionary that is made up of the most important values from data into the summary
+        # summary = action_result.update_summary({})
+        # summary['num_data'] = len(action_result['data'])
+
+        # Return success, no need to set the message, only the status
+        # BaseConnector will create a textual message based off of the summary dictionary
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+        # For now return Error with a message, in case of success we don't set the message, but use the summary
+        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+
+    def _handle_sandfly_process_investigation(self, param):
+        # Implement the handler here
+        # use self.save_progress(...) to send progress messages back to the platform
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
+
+        # Add an action result object to self (BaseConnector) to represent the action for this param
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # Access action parameters passed in the 'param' dictionary
+
+        # Required values can be accessed directly
+        ip_hostname = param['ip_hostname']
+
+        # Optional values should use the .get() function
+
+        # make rest call
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        myparams = dict()
+        myparams['summary'] = 'true'
+
+        ret_val, response = self._make_rest_call(
+            '/hosts', action_result, params=myparams, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        # self.save_progress(json.dumps(response, indent=4, sort_keys=True))
+
+        my_host_id = None
+
+        data_list = response['data']
+        for item in data_list:
+            the_name = item['hostname']
+            last_ip = item['last_seen_ip_addr']
+            the_id = item['host_id']
+            # self.save_progress("{} | {}".format(ip_hostname, the_name))
+            if last_ip == ip_hostname:
+                my_host_id = the_id
+                # self.save_progress("last_ip match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
+            if the_name == ip_hostname:
+                my_host_id = the_id
+                # self.save_progress("the_name match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
+
+        # self.save_progress("ip_hostname: {}\nhost_id: {}".format(ip_hostname, my_host_id))
+
+        if my_host_id is None:
+            return action_result.set_status(phantom.APP_ERROR, "IP/Hostname [{}] not found".format(ip_hostname))
+
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        ret_val, response = self._make_rest_call(
+            '/sandflies', action_result, params=None, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        data_list = response['data']
+
+        t_sandfly_list = []
+        for item in data_list:
+            if item['active'] is True:
+                if item['type'] == 'process':
+                    t_sandfly_list.append(item['id'])
+
+        # self.save_progress(t_sandfly_list)
+
+        if len(t_sandfly_list) == 0:
+            return action_result.set_status(phantom.APP_ERROR, "No Sandflies selected for scanning")
+
+        # make rest call
+        t_host_ids = [my_host_id]
+        scan_payload = { "host_ids": t_host_ids, "sandfly_list": t_sandfly_list }
+
+        # self.save_progress(json.dumps(scan_payload))
+
+        ret_val, response = self._make_rest_call(
+            '/scan', action_result, method="post", data=json.dumps(scan_payload), headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        self.save_progress(json.dumps(response))
+
+        # Add the response into the data section
+        action_result.add_data(scan_payload)
+        action_result.add_data(response)
+
+        # Add a dictionary that is made up of the most important values from data into the summary
+        # summary = action_result.update_summary({})
+        # summary['num_data'] = len(action_result['data'])
+
+        # Return success, no need to set the message, only the status
+        # BaseConnector will create a textual message based off of the summary dictionary
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+        # For now return Error with a message, in case of success we don't set the message, but use the summary
+        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+
+    def _handle_sandfly_file_investigation(self, param):
+        # Implement the handler here
+        # use self.save_progress(...) to send progress messages back to the platform
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
+
+        # Add an action result object to self (BaseConnector) to represent the action for this param
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # Access action parameters passed in the 'param' dictionary
+
+        # Required values can be accessed directly
+        ip_hostname = param['ip_hostname']
+
+        # Optional values should use the .get() function
+
+        # make rest call
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        myparams = dict()
+        myparams['summary'] = 'true'
+
+        ret_val, response = self._make_rest_call(
+            '/hosts', action_result, params=myparams, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        # self.save_progress(json.dumps(response, indent=4, sort_keys=True))
+
+        my_host_id = None
+
+        data_list = response['data']
+        for item in data_list:
+            the_name = item['hostname']
+            last_ip = item['last_seen_ip_addr']
+            the_id = item['host_id']
+            # self.save_progress("{} | {}".format(ip_hostname, the_name))
+            if last_ip == ip_hostname:
+                my_host_id = the_id
+                # self.save_progress("last_ip match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
+            if the_name == ip_hostname:
+                my_host_id = the_id
+                # self.save_progress("the_name match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
+
+        # self.save_progress("ip_hostname: {}\nhost_id: {}".format(ip_hostname, my_host_id))
+
+        if my_host_id is None:
+            return action_result.set_status(phantom.APP_ERROR, "IP/Hostname [{}] not found".format(ip_hostname))
+
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        ret_val, response = self._make_rest_call(
+            '/sandflies', action_result, params=None, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        data_list = response['data']
+
+        t_sandfly_list = []
+        for item in data_list:
+            if item['active'] is True:
+                if item['type'] == 'file':
+                    t_sandfly_list.append(item['id'])
+
+        # self.save_progress(t_sandfly_list)
+
+        if len(t_sandfly_list) == 0:
+            return action_result.set_status(phantom.APP_ERROR, "No Sandflies selected for scanning")
+
+        # make rest call
+        t_host_ids = [my_host_id]
+        scan_payload = { "host_ids": t_host_ids, "sandfly_list": t_sandfly_list }
+
+        # self.save_progress(json.dumps(scan_payload))
+
+        ret_val, response = self._make_rest_call(
+            '/scan', action_result, method="post", data=json.dumps(scan_payload), headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        self.save_progress(json.dumps(response))
+
+        # Add the response into the data section
+        action_result.add_data(scan_payload)
+        action_result.add_data(response)
+
+        # Add a dictionary that is made up of the most important values from data into the summary
+        # summary = action_result.update_summary({})
+        # summary['num_data'] = len(action_result['data'])
+
+        # Return success, no need to set the message, only the status
+        # BaseConnector will create a textual message based off of the summary dictionary
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+        # For now return Error with a message, in case of success we don't set the message, but use the summary
+        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+
+    def _handle_sandfly_directory_investigation(self, param):
+        # Implement the handler here
+        # use self.save_progress(...) to send progress messages back to the platform
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
+
+        # Add an action result object to self (BaseConnector) to represent the action for this param
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # Access action parameters passed in the 'param' dictionary
+
+        # Required values can be accessed directly
+        ip_hostname = param['ip_hostname']
+
+        # Optional values should use the .get() function
+
+        # make rest call
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        myparams = dict()
+        myparams['summary'] = 'true'
+
+        ret_val, response = self._make_rest_call(
+            '/hosts', action_result, params=myparams, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        # self.save_progress(json.dumps(response, indent=4, sort_keys=True))
+
+        my_host_id = None
+
+        data_list = response['data']
+        for item in data_list:
+            the_name = item['hostname']
+            last_ip = item['last_seen_ip_addr']
+            the_id = item['host_id']
+            # self.save_progress("{} | {}".format(ip_hostname, the_name))
+            if last_ip == ip_hostname:
+                my_host_id = the_id
+                # self.save_progress("last_ip match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
+            if the_name == ip_hostname:
+                my_host_id = the_id
+                # self.save_progress("the_name match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
+
+        # self.save_progress("ip_hostname: {}\nhost_id: {}".format(ip_hostname, my_host_id))
+
+        if my_host_id is None:
+            return action_result.set_status(phantom.APP_ERROR, "IP/Hostname [{}] not found".format(ip_hostname))
+
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        ret_val, response = self._make_rest_call(
+            '/sandflies', action_result, params=None, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        data_list = response['data']
+
+        t_sandfly_list = []
+        for item in data_list:
+            if item['active'] is True:
+                if item['type'] == 'directory':
+                    t_sandfly_list.append(item['id'])
+
+        # self.save_progress(t_sandfly_list)
+
+        if len(t_sandfly_list) == 0:
+            return action_result.set_status(phantom.APP_ERROR, "No Sandflies selected for scanning")
+
+        # make rest call
+        t_host_ids = [my_host_id]
+        scan_payload = { "host_ids": t_host_ids, "sandfly_list": t_sandfly_list }
+
+        # self.save_progress(json.dumps(scan_payload))
+
+        ret_val, response = self._make_rest_call(
+            '/scan', action_result, method="post", data=json.dumps(scan_payload), headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        self.save_progress(json.dumps(response))
+
+        # Add the response into the data section
+        action_result.add_data(scan_payload)
+        action_result.add_data(response)
+
+        # Add a dictionary that is made up of the most important values from data into the summary
+        # summary = action_result.update_summary({})
+        # summary['num_data'] = len(action_result['data'])
+
+        # Return success, no need to set the message, only the status
+        # BaseConnector will create a textual message based off of the summary dictionary
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+        # For now return Error with a message, in case of success we don't set the message, but use the summary
+        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+
+    def _handle_sandfly_log_tamper_investigation(self, param):
+        # Implement the handler here
+        # use self.save_progress(...) to send progress messages back to the platform
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
+
+        # Add an action result object to self (BaseConnector) to represent the action for this param
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # Access action parameters passed in the 'param' dictionary
+
+        # Required values can be accessed directly
+        ip_hostname = param['ip_hostname']
+
+        # Optional values should use the .get() function
+
+        # make rest call
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        myparams = dict()
+        myparams['summary'] = 'true'
+
+        ret_val, response = self._make_rest_call(
+            '/hosts', action_result, params=myparams, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        # self.save_progress(json.dumps(response, indent=4, sort_keys=True))
+
+        my_host_id = None
+
+        data_list = response['data']
+        for item in data_list:
+            the_name = item['hostname']
+            last_ip = item['last_seen_ip_addr']
+            the_id = item['host_id']
+            # self.save_progress("{} | {}".format(ip_hostname, the_name))
+            if last_ip == ip_hostname:
+                my_host_id = the_id
+                # self.save_progress("last_ip match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
+            if the_name == ip_hostname:
+                my_host_id = the_id
+                # self.save_progress("the_name match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
+
+        # self.save_progress("ip_hostname: {}\nhost_id: {}".format(ip_hostname, my_host_id))
+
+        if my_host_id is None:
+            return action_result.set_status(phantom.APP_ERROR, "IP/Hostname [{}] not found".format(ip_hostname))
+
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        ret_val, response = self._make_rest_call(
+            '/sandflies', action_result, params=None, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        data_list = response['data']
+
+        t_sandfly_list = []
+        for item in data_list:
+            if item['active'] is True:
+                if item['type'] == 'log':
+                    t_sandfly_list.append(item['id'])
+
+        # self.save_progress(t_sandfly_list)
+
+        if len(t_sandfly_list) == 0:
+            return action_result.set_status(phantom.APP_ERROR, "No Sandflies selected for scanning")
+
+        # make rest call
+        t_host_ids = [my_host_id]
+        scan_payload = { "host_ids": t_host_ids, "sandfly_list": t_sandfly_list }
+
+        # self.save_progress(json.dumps(scan_payload))
+
+        ret_val, response = self._make_rest_call(
+            '/scan', action_result, method="post", data=json.dumps(scan_payload), headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        self.save_progress(json.dumps(response))
+
+        # Add the response into the data section
+        action_result.add_data(scan_payload)
+        action_result.add_data(response)
+
+        # Add a dictionary that is made up of the most important values from data into the summary
+        # summary = action_result.update_summary({})
+        # summary['num_data'] = len(action_result['data'])
+
+        # Return success, no need to set the message, only the status
+        # BaseConnector will create a textual message based off of the summary dictionary
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+        # For now return Error with a message, in case of success we don't set the message, but use the summary
+        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+
+    def _handle_sandfly_user_investigation(self, param):
+        # Implement the handler here
+        # use self.save_progress(...) to send progress messages back to the platform
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
+
+        # Add an action result object to self (BaseConnector) to represent the action for this param
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # Access action parameters passed in the 'param' dictionary
+
+        # Required values can be accessed directly
+        ip_hostname = param['ip_hostname']
+
+        # Optional values should use the .get() function
+
+        # make rest call
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        myparams = dict()
+        myparams['summary'] = 'true'
+
+        ret_val, response = self._make_rest_call(
+            '/hosts', action_result, params=myparams, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        # self.save_progress(json.dumps(response, indent=4, sort_keys=True))
+
+        my_host_id = None
+
+        data_list = response['data']
+        for item in data_list:
+            the_name = item['hostname']
+            last_ip = item['last_seen_ip_addr']
+            the_id = item['host_id']
+            # self.save_progress("{} | {}".format(ip_hostname, the_name))
+            if last_ip == ip_hostname:
+                my_host_id = the_id
+                # self.save_progress("last_ip match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
+            if the_name == ip_hostname:
+                my_host_id = the_id
+                # self.save_progress("the_name match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
+
+        # self.save_progress("ip_hostname: {}\nhost_id: {}".format(ip_hostname, my_host_id))
+
+        if my_host_id is None:
+            return action_result.set_status(phantom.APP_ERROR, "IP/Hostname [{}] not found".format(ip_hostname))
+
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        ret_val, response = self._make_rest_call(
+            '/sandflies', action_result, params=None, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        data_list = response['data']
+
+        t_sandfly_list = []
+        for item in data_list:
+            if item['active'] is True:
+                if item['type'] == 'user':
+                    t_sandfly_list.append(item['id'])
+
+        # self.save_progress(t_sandfly_list)
+
+        if len(t_sandfly_list) == 0:
+            return action_result.set_status(phantom.APP_ERROR, "No Sandflies selected for scanning")
+
+        # make rest call
+        t_host_ids = [my_host_id]
+        scan_payload = { "host_ids": t_host_ids, "sandfly_list": t_sandfly_list }
+
+        # self.save_progress(json.dumps(scan_payload))
+
+        ret_val, response = self._make_rest_call(
+            '/scan', action_result, method="post", data=json.dumps(scan_payload), headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        self.save_progress(json.dumps(response))
+
+        # Add the response into the data section
+        action_result.add_data(scan_payload)
+        action_result.add_data(response)
+
+        # Add a dictionary that is made up of the most important values from data into the summary
+        # summary = action_result.update_summary({})
+        # summary['num_data'] = len(action_result['data'])
+
+        # Return success, no need to set the message, only the status
+        # BaseConnector will create a textual message based off of the summary dictionary
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+        # For now return Error with a message, in case of success we don't set the message, but use the summary
+        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+
+    def _handle_sandfly_recon_investigation(self, param):
+        # Implement the handler here
+        # use self.save_progress(...) to send progress messages back to the platform
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
+
+        # Add an action result object to self (BaseConnector) to represent the action for this param
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # Access action parameters passed in the 'param' dictionary
+
+        # Required values can be accessed directly
+        ip_hostname = param['ip_hostname']
+
+        # Optional values should use the .get() function
+
+        # make rest call
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        myparams = dict()
+        myparams['summary'] = 'true'
+
+        ret_val, response = self._make_rest_call(
+            '/hosts', action_result, params=myparams, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        # self.save_progress(json.dumps(response, indent=4, sort_keys=True))
+
+        my_host_id = None
+
+        data_list = response['data']
+        for item in data_list:
+            the_name = item['hostname']
+            last_ip = item['last_seen_ip_addr']
+            the_id = item['host_id']
+            # self.save_progress("{} | {}".format(ip_hostname, the_name))
+            if last_ip == ip_hostname:
+                my_host_id = the_id
+                # self.save_progress("last_ip match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
+            if the_name == ip_hostname:
+                my_host_id = the_id
+                # self.save_progress("the_name match: ip_hostname: {} host_id: {}".format(ip_hostname, my_host_id))
+                break
+
+        # self.save_progress("ip_hostname: {}\nhost_id: {}".format(ip_hostname, my_host_id))
+
+        if my_host_id is None:
+            return action_result.set_status(phantom.APP_ERROR, "IP/Hostname [{}] not found".format(ip_hostname))
+
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        ret_val, response = self._make_rest_call(
+            '/sandflies', action_result, params=None, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        data_list = response['data']
+
+        t_sandfly_list = []
+        for item in data_list:
+            if item['active'] is True:
+                if item['type'] == 'recon':
+                    t_sandfly_list.append(item['id'])
+
+        # self.save_progress(t_sandfly_list)
+
+        if len(t_sandfly_list) == 0:
+            return action_result.set_status(phantom.APP_ERROR, "No Sandflies selected for scanning")
+
+        # make rest call
+        t_host_ids = [my_host_id]
+        scan_payload = { "host_ids": t_host_ids, "sandfly_list": t_sandfly_list }
+
+        # self.save_progress(json.dumps(scan_payload))
+
+        ret_val, response = self._make_rest_call(
+            '/scan', action_result, method="post", data=json.dumps(scan_payload), headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        self.save_progress(json.dumps(response))
+
+        # Add the response into the data section
+        action_result.add_data(scan_payload)
+        action_result.add_data(response)
+
+        # Add a dictionary that is made up of the most important values from data into the summary
+        # summary = action_result.update_summary({})
+        # summary['num_data'] = len(action_result['data'])
+
+        # Return success, no need to set the message, only the status
+        # BaseConnector will create a textual message based off of the summary dictionary
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+        # For now return Error with a message, in case of success we don't set the message, but use the summary
+        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+
     def handle_action(self, param):
         ret_val = phantom.APP_SUCCESS
 
@@ -398,6 +1255,27 @@ class SandflySecurityConnector(BaseConnector):
 
         if action_id == 'scan_host':
             ret_val = self._handle_scan_host(param)
+
+        if action_id == 'sandfly_full_investigation':
+            ret_val = self._handle_sandfly_full_investigation(param)
+
+        if action_id == 'sandfly_process_investigation':
+            ret_val = self._handle_sandfly_process_investigation(param)
+
+        if action_id == 'sandfly_file_investigation':
+            ret_val = self._handle_sandfly_file_investigation(param)
+
+        if action_id == 'sandfly_directory_investigation':
+            ret_val = self._handle_sandfly_directory_investigation(param)
+
+        if action_id == 'sandfly_log_tamper_investigation':
+            ret_val = self._handle_sandfly_log_tamper_investigation(param)
+
+        if action_id == 'sandfly_user_investigation':
+            ret_val = self._handle_sandfly_user_investigation(param)
+
+        if action_id == 'sandfly_recon_investigation':
+            ret_val = self._handle_sandfly_recon_investigation(param)
 
         if action_id == 'test_connectivity':
             ret_val = self._handle_test_connectivity(param)
