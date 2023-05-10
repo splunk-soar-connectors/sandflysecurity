@@ -1287,7 +1287,6 @@ class SandflySecurityConnector(BaseConnector):
                 'ip': item['last_seen_ip_addr'],
                 'os_info': item['os_info_os_release_pretty_name']
             }
-            self.save_progress(json.dumps(endpoint, indent=4, sort_keys=False))
             # Add the response into the data section
             action_result.add_data(endpoint)
 
@@ -1347,12 +1346,10 @@ class SandflySecurityConnector(BaseConnector):
             last_ip = item['last_seen_ip_addr']
             the_id = item['host_id']
             if last_ip == ip_hostname:
-                self.save_progress(json.dumps(item, indent=4, sort_keys=True))
                 action_result.add_data(item)
                 my_host_id = the_id
                 break
             if the_name == ip_hostname:
-                self.save_progress(json.dumps(item, indent=4, sort_keys=True))
                 action_result.add_data(item)
                 my_host_id = the_id
                 break

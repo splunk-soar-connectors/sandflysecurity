@@ -28,25 +28,19 @@
             "description": "Sandfly Server URL",
             "data_type": "string",
             "required": true,
-            "order": 0,
-            "name": "Sandfly Server URL",
-            "id": 0
+            "order": 0
         },
         "Username": {
             "description": "Login Username",
             "data_type": "string",
             "required": true,
-            "order": 1,
-            "name": "Username",
-            "id": 1
+            "order": 1
         },
         "Password": {
             "description": "Login Password",
             "data_type": "password",
             "required": true,
-            "order": 2,
-            "name": "Password",
-            "id": 2
+            "order": 2
         }
     },
     "actions": [
@@ -72,64 +66,59 @@
                     "description": "IP or name of the host",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 },
                 "directory": {
                     "description": "Sandfly Type - directory",
                     "data_type": "boolean",
-                    "order": 1,
-                    "name": "directory"
+                    "order": 1
                 },
                 "file": {
                     "description": "Sandfly Type - file",
                     "data_type": "boolean",
-                    "order": 2,
-                    "name": "file"
+                    "order": 2
                 },
                 "incident": {
                     "description": "Sandfly Type - incident",
                     "data_type": "boolean",
-                    "order": 3,
-                    "name": "incident"
+                    "order": 3
                 },
                 "log": {
                     "description": "Sandfly Type - log",
                     "data_type": "boolean",
-                    "order": 4,
-                    "name": "log"
+                    "order": 4
                 },
                 "policy": {
                     "description": "Sandfly Type - policy",
                     "data_type": "boolean",
-                    "order": 5,
-                    "name": "policy"
+                    "order": 5
                 },
                 "process": {
                     "description": "Sandfly Type - process",
                     "data_type": "boolean",
-                    "order": 6,
-                    "name": "process"
+                    "order": 6
                 },
                 "recon": {
                     "description": "Sandfly Type - recon",
                     "data_type": "boolean",
-                    "order": 7,
-                    "name": "recon"
+                    "order": 7
                 },
                 "user": {
                     "description": "Sandfly Type - user",
                     "data_type": "boolean",
-                    "order": 8,
-                    "name": "user"
+                    "order": 8
                 }
             },
             "output": [
                 {
-                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
+                    "column_name": "Status",
+                    "column_order": 9,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
                 },
                 {
                     "data_path": "action_result.parameter.directory",
@@ -148,6 +137,12 @@
                     "data_type": "boolean",
                     "column_name": "Incident",
                     "column_order": 3
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
                 },
                 {
                     "data_path": "action_result.parameter.log",
@@ -180,14 +175,12 @@
                     "column_order": 8
                 },
                 {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "column_name": "Status",
-                    "column_order": 9,
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -213,23 +206,15 @@
             "description": "Run a full Sandfly investigation",
             "verbose": "Run a full Sandfly investigation for all process, file, directory, log, user, incident, policy and recon types.",
             "type": "investigate",
-            "read_only": false,
             "parameters": {
                 "ip_hostname": {
                     "description": "IP or Hostname",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
             "output": [
-                {
-                    "data_path": "action_result.parameter.ip_hostname",
-                    "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
-                },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
@@ -239,6 +224,20 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -264,23 +263,15 @@
             "description": "Run a Sandfly process investigation",
             "verbose": "Run a Sandfly investigation against the target system for the process type.",
             "type": "investigate",
-            "read_only": false,
             "parameters": {
                 "ip_hostname": {
                     "description": "IP or Hostname of the target system",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
             "output": [
-                {
-                    "data_path": "action_result.parameter.ip_hostname",
-                    "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
-                },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
@@ -290,6 +281,20 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -315,23 +320,15 @@
             "description": "Run a Sandfly file investigation",
             "verbose": "Run a Sandfly investigation against the target system for the file type.",
             "type": "investigate",
-            "read_only": false,
             "parameters": {
                 "ip_hostname": {
                     "description": "IP or Hostname of the target system",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
             "output": [
-                {
-                    "data_path": "action_result.parameter.ip_hostname",
-                    "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
-                },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
@@ -341,6 +338,20 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -366,23 +377,15 @@
             "description": "Run a Sandfly directory investigation",
             "verbose": "Run a Sandfly investigation against the target system for the directory type.",
             "type": "investigate",
-            "read_only": false,
             "parameters": {
                 "ip_hostname": {
                     "description": "IP or Hostname of the target system",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
             "output": [
-                {
-                    "data_path": "action_result.parameter.ip_hostname",
-                    "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
-                },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
@@ -392,6 +395,20 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -417,23 +434,15 @@
             "description": "Run a Sandfly log tamper investigation",
             "verbose": "Run a Sandfly investigation against the target system for the log type.",
             "type": "investigate",
-            "read_only": false,
             "parameters": {
                 "ip_hostname": {
                     "description": "IP or Hostname of the target system",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
             "output": [
-                {
-                    "data_path": "action_result.parameter.ip_hostname",
-                    "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
-                },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
@@ -443,6 +452,20 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -468,23 +491,15 @@
             "description": "Run a Sandfly user investigation",
             "verbose": "Run a Sandfly investigation against the target system for the user type.",
             "type": "investigate",
-            "read_only": false,
             "parameters": {
                 "ip_hostname": {
                     "description": "IP or Hostname of the target system",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
             "output": [
-                {
-                    "data_path": "action_result.parameter.ip_hostname",
-                    "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
-                },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
@@ -494,6 +509,20 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -519,23 +548,15 @@
             "description": "Run a Sandfly recon investigation",
             "verbose": "Run a Sandfly investigation against the target system for the recon type.",
             "type": "investigate",
-            "read_only": false,
             "parameters": {
                 "ip_hostname": {
                     "description": "IP or Hostname of the target system",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
             "output": [
-                {
-                    "data_path": "action_result.parameter.ip_hostname",
-                    "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
-                },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
@@ -545,6 +566,20 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -568,7 +603,6 @@
             "action": "list endpoints",
             "identifier": "list_endpoints",
             "description": "List all the endpoints/sensors configured on the device",
-            "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {},
@@ -576,8 +610,20 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 0
+                    "column_name": "Status",
+                    "column_order": 0,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -601,7 +647,6 @@
             "action": "get system info",
             "identifier": "get_system_info",
             "description": "Get information about an endpoint",
-            "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -614,13 +659,20 @@
                         "host name",
                         "ip"
                     ],
-                    "value_list": [],
-                    "default": "",
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
             "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 1,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
                 {
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
@@ -628,14 +680,16 @@
                         "host name",
                         "ip"
                     ],
-                    "column_name": "ip_hostname",
+                    "column_name": "IP Hostname",
                     "column_order": 0
                 },
                 {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 1
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -664,7 +718,7 @@
             },
             {
                 "module": "certifi",
-                "input_file": "wheels/py3/certifi-2022.12.7-py3-none-any.whl"
+                "input_file": "wheels/py3/certifi-2023.5.7-py3-none-any.whl"
             },
             {
                 "module": "chardet",
@@ -704,7 +758,7 @@
             },
             {
                 "module": "certifi",
-                "input_file": "wheels/py3/certifi-2022.12.7-py3-none-any.whl"
+                "input_file": "wheels/py3/certifi-2023.5.7-py3-none-any.whl"
             },
             {
                 "module": "chardet",
@@ -720,7 +774,7 @@
             },
             {
                 "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.4-py3-none-any.whl"
+                "input_file": "wheels/py3/soupsieve-2.4.1-py3-none-any.whl"
             },
             {
                 "module": "urllib3",
