@@ -206,6 +206,7 @@
             "description": "Run a full Sandfly investigation",
             "verbose": "Run a full Sandfly investigation for all process, file, directory, log, user, incident, policy and recon types.",
             "type": "investigate",
+            "read_only": false,
             "parameters": {
                 "ip_hostname": {
                     "description": "IP or Hostname",
@@ -263,6 +264,7 @@
             "description": "Run a Sandfly process investigation",
             "verbose": "Run a Sandfly investigation against the target system for the process type.",
             "type": "investigate",
+            "read_only": false,
             "parameters": {
                 "ip_hostname": {
                     "description": "IP or Hostname of the target system",
@@ -320,6 +322,7 @@
             "description": "Run a Sandfly file investigation",
             "verbose": "Run a Sandfly investigation against the target system for the file type.",
             "type": "investigate",
+            "read_only": false,
             "parameters": {
                 "ip_hostname": {
                     "description": "IP or Hostname of the target system",
@@ -377,6 +380,7 @@
             "description": "Run a Sandfly directory investigation",
             "verbose": "Run a Sandfly investigation against the target system for the directory type.",
             "type": "investigate",
+            "read_only": false,
             "parameters": {
                 "ip_hostname": {
                     "description": "IP or Hostname of the target system",
@@ -434,6 +438,7 @@
             "description": "Run a Sandfly log tamper investigation",
             "verbose": "Run a Sandfly investigation against the target system for the log type.",
             "type": "investigate",
+            "read_only": false,
             "parameters": {
                 "ip_hostname": {
                     "description": "IP or Hostname of the target system",
@@ -491,6 +496,7 @@
             "description": "Run a Sandfly user investigation",
             "verbose": "Run a Sandfly investigation against the target system for the user type.",
             "type": "investigate",
+            "read_only": false,
             "parameters": {
                 "ip_hostname": {
                     "description": "IP or Hostname of the target system",
@@ -548,6 +554,7 @@
             "description": "Run a Sandfly recon investigation",
             "verbose": "Run a Sandfly investigation against the target system for the recon type.",
             "type": "investigate",
+            "read_only": false,
             "parameters": {
                 "ip_hostname": {
                     "description": "IP or Hostname of the target system",
