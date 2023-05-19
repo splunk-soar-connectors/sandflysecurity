@@ -1,1 +1,4 @@
 **Unreleased**
+* Added two new actions to get information from the Sandfly Server
+    * get system info - Get information about an endpoint
+    * list endpoints - List all the endpoints/sensors configured on the device
