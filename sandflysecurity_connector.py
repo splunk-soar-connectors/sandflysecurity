@@ -1245,6 +1245,137 @@ class SandflySecurityConnector(BaseConnector):
         # For now return Error with a message, in case of success we don't set the message, but use the summary
         # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
 
+    def _handle_list_endpoints(self, param):
+        # Implement the handler here
+        # use self.save_progress(...) to send progress messages back to the platform
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
+
+        # Add an action result object to self (BaseConnector) to represent the action for this param
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # Access action parameters passed in the 'param' dictionary
+
+        # Required values can be accessed directly
+        # required_parameter = param['required_parameter']
+
+        # Optional values should use the .get() function
+        # optional_parameter = param.get('optional_parameter', 'default_value')
+
+        # make rest call
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        myparams = dict()
+        myparams['summary'] = 'true'
+
+        ret_val, response = self._make_rest_call(
+            '/hosts', action_result, params=myparams, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        data_list = response['data']
+        for item in data_list:
+            endpoint = {
+                'hostname': item['hostname'],
+                'ip': item['last_seen_ip_addr'],
+                'os_info': item['os_info_os_release_pretty_name']
+            }
+            self.save_progress(json.dumps(endpoint, indent=4, sort_keys=False))  # nosemgrep
+            # Add the response into the data section
+            action_result.add_data(endpoint)
+
+        # Add a dictionary that is made up of the most important values from data into the summary
+        # summary = action_result.update_summary({})
+        # summary['num_data'] = len(action_result['data'])
+
+        # Return success, no need to set the message, only the status
+        # BaseConnector will create a textual message based off of the summary dictionary
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+        # For now return Error with a message, in case of success we don't set the message, but use the summary
+        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+
+    def _handle_get_system_info(self, param):
+        # Implement the handler here
+        # use self.save_progress(...) to send progress messages back to the platform
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
+
+        # Add an action result object to self (BaseConnector) to represent the action for this param
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # Access action parameters passed in the 'param' dictionary
+
+        # Required values can be accessed directly
+        ip_hostname = param['ip_hostname']
+
+        # Optional values should use the .get() function
+        # optional_parameter = param.get('optional_parameter', 'default_value')
+
+        # make rest call
+        headers = dict()
+        headers['Accept'] = 'application/json'
+        headers['Content-Type'] = 'application/json'
+        headers['Authorization'] = 'Bearer ' + self._access_token
+
+        myparams = dict()
+        myparams['summary'] = 'true'
+
+        ret_val, response = self._make_rest_call(
+            '/hosts', action_result, params=myparams, headers=headers
+        )
+
+        if phantom.is_fail(ret_val):
+            # the call to the 3rd party device or service failed, action result should contain all the error details
+            # for now the return is commented out, but after implementation, return from here
+            return action_result.get_status()
+
+        # Now post process the data,  uncomment code as you deem fit
+        # self.save_progress(json.dumps(response, indent=4, sort_keys=True))
+
+        my_host_id = None
+
+        data_list = response['data']
+        for item in data_list:
+            the_name = item['hostname']
+            last_ip = item['last_seen_ip_addr']
+            the_id = item['host_id']
+            if last_ip == ip_hostname:
+                self.save_progress(json.dumps(item, indent=4, sort_keys=True))  # nosemgrep
+                action_result.add_data(item)
+                my_host_id = the_id
+                break
+            if the_name == ip_hostname:
+                self.save_progress(json.dumps(item, indent=4, sort_keys=True))  # nosemgrep
+                action_result.add_data(item)
+                my_host_id = the_id
+                break
+
+        self.save_progress("ip_hostname: {}\nhost_id: {}".format(ip_hostname, my_host_id))
+
+        if my_host_id is None:
+            return action_result.set_status(phantom.APP_ERROR, "IP/Hostname [{}] not found".format(ip_hostname))
+
+        # Add the response into the data section
+        # action_result.add_data(response)
+
+        # Add a dictionary that is made up of the most important values from data into the summary
+        # summary = action_result.update_summary({})
+        # summary['num_data'] = len(action_result['data'])
+
+        # Return success, no need to set the message, only the status
+        # BaseConnector will create a textual message based off of the summary dictionary
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+        # For now return Error with a message, in case of success we don't set the message, but use the summary
+        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+
     def handle_action(self, param):
         ret_val = phantom.APP_SUCCESS
 
@@ -1276,6 +1407,12 @@ class SandflySecurityConnector(BaseConnector):
 
         if action_id == 'sandfly_recon_investigation':
             ret_val = self._handle_sandfly_recon_investigation(param)
+
+        if action_id == 'list_endpoints':
+            ret_val = self._handle_list_endpoints(param)
+
+        if action_id == 'get_system_info':
+            ret_val = self._handle_get_system_info(param)
 
         if action_id == 'test_connectivity':
             ret_val = self._handle_test_connectivity(param)
@@ -1314,7 +1451,7 @@ class SandflySecurityConnector(BaseConnector):
             headers['Accept'] = 'application/json'
             headers['Content-Type'] = 'application/json'
 
-            r2 = requests.post(login_url, verify=False, data=json.dumps(data), headers=headers)
+            r2 = requests.post(login_url, verify=False, data=json.dumps(data), headers=headers)   # nosemgrep
 
             if r2.status_code != 200:
                 return phantom.APP_ERROR
@@ -1343,12 +1480,14 @@ def main():
     argparser.add_argument('input_test_json', help='Input Test JSON file')
     argparser.add_argument('-u', '--username', help='username', required=False)
     argparser.add_argument('-p', '--password', help='password', required=False)
+    argparser.add_argument('-v', '--verify', action='store_true', help='verify', required=False, default=False)
 
     args = argparser.parse_args()
     session_id = None
 
     username = args.username
     password = args.password
+    verify = args.verify
 
     if username is not None and password is None:
 
@@ -1361,7 +1500,7 @@ def main():
             login_url = SandflySecurityConnector._get_phantom_base_url() + '/login'
 
             print("Accessing the Login page")
-            r = requests.get(login_url, verify=False)
+            r = requests.get(login_url, verify=verify)
             csrftoken = r.cookies['csrftoken']
 
             data = dict()
@@ -1374,7 +1513,7 @@ def main():
             headers['Referer'] = login_url
 
             print("Logging into Platform to get the session id")
-            r2 = requests.post(login_url, verify=False, data=data, headers=headers)
+            r2 = requests.post(login_url, verify=verify, data=data, headers=headers)
             session_id = r2.cookies['sessionid']
         except Exception as e:
             print("Unable to get session id from the platform. Error: " + str(e))

@@ -10,12 +10,14 @@
     "python_version": "3",
     "product_version_regex": ".*",
     "publisher": "Sandfly Security, Ltd.",
-    "contributors": [{
-        "name": "Steven Snapp"
-    }],
+    "contributors": [
+        {
+            "name": "Steven Snapp"
+        }
+    ],
     "license": "Copyright (c) Sandfly Security, Ltd., 2023",
-    "app_version": "1.2.0",
-    "utctime_updated": "2023-02-25T15:22:20.505537Z",
+    "app_version": "1.3.0",
+    "utctime_updated": "2023-05-05T17:31:17.411932Z",
     "package_name": "phantom_sandflysecurity",
     "main_module": "sandflysecurity_connector.py",
     "min_phantom_version": "5.5.0",
@@ -26,28 +28,23 @@
             "description": "Sandfly Server URL",
             "data_type": "string",
             "required": true,
-            "order": 0,
-            "name": "Sandfly Server URL",
-            "id": 0
+            "order": 0
         },
         "Username": {
             "description": "Login Username",
             "data_type": "string",
             "required": true,
-            "order": 1,
-            "name": "Username",
-            "id": 1
+            "order": 1
         },
         "Password": {
             "description": "Login Password",
             "data_type": "password",
             "required": true,
-            "order": 2,
-            "name": "Password",
-            "id": 2
+            "order": 2
         }
     },
-    "actions": [{
+    "actions": [
+        {
             "action": "test connectivity",
             "identifier": "test_connectivity",
             "description": "Validate the asset configuration for connectivity using supplied configuration",
@@ -69,63 +66,59 @@
                     "description": "IP or name of the host",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 },
                 "directory": {
                     "description": "Sandfly Type - directory",
                     "data_type": "boolean",
-                    "order": 1,
-                    "name": "directory"
+                    "order": 1
                 },
                 "file": {
                     "description": "Sandfly Type - file",
                     "data_type": "boolean",
-                    "order": 2,
-                    "name": "file"
+                    "order": 2
                 },
                 "incident": {
                     "description": "Sandfly Type - incident",
                     "data_type": "boolean",
-                    "order": 3,
-                    "name": "incident"
+                    "order": 3
                 },
                 "log": {
                     "description": "Sandfly Type - log",
                     "data_type": "boolean",
-                    "order": 4,
-                    "name": "log"
+                    "order": 4
                 },
                 "policy": {
                     "description": "Sandfly Type - policy",
                     "data_type": "boolean",
-                    "order": 5,
-                    "name": "policy"
+                    "order": 5
                 },
                 "process": {
                     "description": "Sandfly Type - process",
                     "data_type": "boolean",
-                    "order": 6,
-                    "name": "process"
+                    "order": 6
                 },
                 "recon": {
                     "description": "Sandfly Type - recon",
                     "data_type": "boolean",
-                    "order": 7,
-                    "name": "recon"
+                    "order": 7
                 },
                 "user": {
                     "description": "Sandfly Type - user",
                     "data_type": "boolean",
-                    "order": 8,
-                    "name": "user"
+                    "order": 8
                 }
             },
-            "output": [{
-                    "data_path": "action_result.parameter.ip_hostname",
+            "output": [
+                {
+                    "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
+                    "column_name": "Status",
+                    "column_order": 9,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
                 },
                 {
                     "data_path": "action_result.parameter.directory",
@@ -144,6 +137,12 @@
                     "data_type": "boolean",
                     "column_name": "Incident",
                     "column_order": 3
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
                 },
                 {
                     "data_path": "action_result.parameter.log",
@@ -176,14 +175,12 @@
                     "column_order": 8
                 },
                 {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "column_name": "Status",
-                    "column_order": 9,
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -215,16 +212,10 @@
                     "description": "IP or Hostname",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
-            "output": [{
-                    "data_path": "action_result.parameter.ip_hostname",
-                    "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
-                },
+            "output": [
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
@@ -234,6 +225,20 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -265,16 +270,10 @@
                     "description": "IP or Hostname of the target system",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
-            "output": [{
-                    "data_path": "action_result.parameter.ip_hostname",
-                    "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
-                },
+            "output": [
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
@@ -284,6 +283,20 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -315,16 +328,10 @@
                     "description": "IP or Hostname of the target system",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
-            "output": [{
-                    "data_path": "action_result.parameter.ip_hostname",
-                    "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
-                },
+            "output": [
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
@@ -334,6 +341,20 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -365,16 +386,10 @@
                     "description": "IP or Hostname of the target system",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
-            "output": [{
-                    "data_path": "action_result.parameter.ip_hostname",
-                    "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
-                },
+            "output": [
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
@@ -384,6 +399,20 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -415,16 +444,10 @@
                     "description": "IP or Hostname of the target system",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
-            "output": [{
-                    "data_path": "action_result.parameter.ip_hostname",
-                    "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
-                },
+            "output": [
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
@@ -434,6 +457,20 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -465,16 +502,10 @@
                     "description": "IP or Hostname of the target system",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
-            "output": [{
-                    "data_path": "action_result.parameter.ip_hostname",
-                    "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
-                },
+            "output": [
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
@@ -484,6 +515,20 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -515,16 +560,10 @@
                     "description": "IP or Hostname of the target system",
                     "data_type": "string",
                     "required": true,
-                    "order": 0,
-                    "name": "ip_hostname"
+                    "order": 0
                 }
             },
-            "output": [{
-                    "data_path": "action_result.parameter.ip_hostname",
-                    "data_type": "string",
-                    "column_name": "IP Hostname",
-                    "column_order": 0
-                },
+            "output": [
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
@@ -534,6 +573,130 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list endpoints",
+            "identifier": "list_endpoints",
+            "description": "List all the endpoints/sensors configured on the device",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {},
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 0,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get system info",
+            "identifier": "get_system_info",
+            "description": "Get information about an endpoint",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "ip_hostname": {
+                    "description": "Hostname/IP address to get info of",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "host name",
+                        "ip"
+                    ],
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "Status",
+                    "column_order": 1,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "contains": [
+                        "host name",
+                        "ip"
+                    ],
+                    "column_name": "IP Hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -555,13 +718,14 @@
         }
     ],
     "pip_dependencies": {
-        "wheel": [{
+        "wheel": [
+            {
                 "module": "beautifulsoup4",
                 "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
             },
             {
                 "module": "certifi",
-                "input_file": "wheels/py3/certifi-2022.12.7-py3-none-any.whl"
+                "input_file": "wheels/py3/certifi-2023.5.7-py3-none-any.whl"
             },
             {
                 "module": "chardet",
@@ -592,15 +756,16 @@
     "executable": "spawn3",
     "disabled": false,
     "copied_from_id": 183,
-    "copied_from_version": "1.0.1",
+    "copied_from_version": "1.2.0",
     "pip39_dependencies": {
-        "wheel": [{
+        "wheel": [
+            {
                 "module": "beautifulsoup4",
                 "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
             },
             {
                 "module": "certifi",
-                "input_file": "wheels/py3/certifi-2022.12.7-py3-none-any.whl"
+                "input_file": "wheels/py3/certifi-2023.5.7-py3-none-any.whl"
             },
             {
                 "module": "chardet",
@@ -616,7 +781,7 @@
             },
             {
                 "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.4-py3-none-any.whl"
+                "input_file": "wheels/py3/soupsieve-2.4.1-py3-none-any.whl"
             },
             {
                 "module": "urllib3",

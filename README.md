@@ -2,7 +2,7 @@
 # Sandfly Security
 
 Publisher: Sandfly Security, Ltd.  
-Connector Version: 1.2.0  
+Connector Version: 1.3.0  
 Product Vendor: Sandfly Security  
 Product Name: Sandfly Security Agentless Linux Security  
 Product Version Supported (regex): ".\*"  
@@ -68,6 +68,8 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 [sandfly log tamper investigation](#action-sandfly-log-tamper-investigation) - Run a Sandfly log tamper investigation  
 [sandfly user investigation](#action-sandfly-user-investigation) - Run a Sandfly user investigation  
 [sandfly recon investigation](#action-sandfly-recon-investigation) - Run a Sandfly recon investigation  
+[list endpoints](#action-list-endpoints) - List all the endpoints/sensors configured on the device  
+[get system info](#action-get-system-info) - Get information about an endpoint  
 
 ## action: 'test connectivity'
 Validate the asset configuration for connectivity using supplied configuration
@@ -105,16 +107,18 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.ip_hostname | string |  |  
+action_result.status | string |  |   success  failed 
 action_result.parameter.directory | boolean |  |  
 action_result.parameter.file | boolean |  |  
 action_result.parameter.incident | boolean |  |  
+action_result.parameter.ip_hostname | string |  |  
 action_result.parameter.log | boolean |  |  
 action_result.parameter.policy | boolean |  |  
 action_result.parameter.process | boolean |  |  
 action_result.parameter.recon | boolean |  |  
 action_result.parameter.user | boolean |  |  
-action_result.status | string |  |   success  failed 
+action_result.data | string |  |  
+action_result.summary | string |  |  
 action_result.message | string |  |  
 summary.total_objects | numeric |  |  
 summary.total_objects_successful | numeric |  |    
@@ -135,8 +139,10 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.ip_hostname | string |  |  
 action_result.status | string |  |   success  failed 
+action_result.parameter.ip_hostname | string |  |  
+action_result.data | string |  |  
+action_result.summary | string |  |  
 action_result.message | string |  |  
 summary.total_objects | numeric |  |  
 summary.total_objects_successful | numeric |  |    
@@ -157,8 +163,10 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.ip_hostname | string |  |  
 action_result.status | string |  |   success  failed 
+action_result.parameter.ip_hostname | string |  |  
+action_result.data | string |  |  
+action_result.summary | string |  |  
 action_result.message | string |  |  
 summary.total_objects | numeric |  |  
 summary.total_objects_successful | numeric |  |    
@@ -179,8 +187,10 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.ip_hostname | string |  |  
 action_result.status | string |  |   success  failed 
+action_result.parameter.ip_hostname | string |  |  
+action_result.data | string |  |  
+action_result.summary | string |  |  
 action_result.message | string |  |  
 summary.total_objects | numeric |  |  
 summary.total_objects_successful | numeric |  |    
@@ -201,8 +211,10 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.ip_hostname | string |  |  
 action_result.status | string |  |   success  failed 
+action_result.parameter.ip_hostname | string |  |  
+action_result.data | string |  |  
+action_result.summary | string |  |  
 action_result.message | string |  |  
 summary.total_objects | numeric |  |  
 summary.total_objects_successful | numeric |  |    
@@ -223,8 +235,10 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.ip_hostname | string |  |  
 action_result.status | string |  |   success  failed 
+action_result.parameter.ip_hostname | string |  |  
+action_result.data | string |  |  
+action_result.summary | string |  |  
 action_result.message | string |  |  
 summary.total_objects | numeric |  |  
 summary.total_objects_successful | numeric |  |    
@@ -245,8 +259,10 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.ip_hostname | string |  |  
 action_result.status | string |  |   success  failed 
+action_result.parameter.ip_hostname | string |  |  
+action_result.data | string |  |  
+action_result.summary | string |  |  
 action_result.message | string |  |  
 summary.total_objects | numeric |  |  
 summary.total_objects_successful | numeric |  |    
@@ -267,8 +283,51 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.ip_hostname | string |  |  
 action_result.status | string |  |   success  failed 
+action_result.parameter.ip_hostname | string |  |  
+action_result.data | string |  |  
+action_result.summary | string |  |  
+action_result.message | string |  |  
+summary.total_objects | numeric |  |  
+summary.total_objects_successful | numeric |  |    
+
+## action: 'list endpoints'
+List all the endpoints/sensors configured on the device
+
+Type: **investigate**  
+Read only: **True**
+
+#### Action Parameters
+No parameters are required for this action
+
+#### Action Output
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.data | string |  |  
+action_result.summary | string |  |  
+action_result.message | string |  |  
+summary.total_objects | numeric |  |  
+summary.total_objects_successful | numeric |  |    
+
+## action: 'get system info'
+Get information about an endpoint
+
+Type: **investigate**  
+Read only: **True**
+
+#### Action Parameters
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**ip_hostname** |  required  | Hostname/IP address to get info of | string |  `host name`  `ip` 
+
+#### Action Output
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.ip_hostname | string |  `host name`  `ip`  |  
+action_result.data | string |  |  
+action_result.summary | string |  |  
 action_result.message | string |  |  
 summary.total_objects | numeric |  |  
 summary.total_objects_successful | numeric |  |  
