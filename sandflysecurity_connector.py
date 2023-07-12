@@ -1448,7 +1448,7 @@ class SandflySecurityConnector(BaseConnector):
                     {"columnField": "data.name", "operatorValue": "equals", "value": "recon_user_list_all"},
                     {"columnField": "header.host_id", "operatorValue": "equals", "value": my_host_id},
                 ],
-		        "linkoperator": "and"
+                "linkoperator": "and"
             },
             "sort": [
                 {"Field": "sequence_id", "sort": "asc"}

@@ -797,7 +797,6 @@
             "action": "list processes",
             "identifier": "list_processes",
             "description": "List the running processes on a machine",
-            "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
