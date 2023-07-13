@@ -16,7 +16,7 @@
         }
     ],
     "license": "Copyright (c) Sandfly Security, Ltd., 2023",
-    "app_version": "1.5.0",
+    "app_version": "1.4.0",
     "utctime_updated": "2023-07-03T22:14:59.669467Z",
     "package_name": "phantom_sandflysecurity",
     "main_module": "sandflysecurity_connector.py",
@@ -745,16 +745,12 @@
             "description": "List the user accounts on a machine",
             "verbose": "List all user accounts on the specified system.",
             "type": "investigate",
-            "read_only": false,
+            "read_only": true,
             "parameters": {
                 "ip_hostname": {
                     "description": "Hostname/IP of the machine to list user accounts",
                     "data_type": "string",
                     "required": true,
-                    "primary": true,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
                     "order": 0,
                     "name": "ip_hostname",
                     "id": 1,
@@ -765,15 +761,18 @@
                 {
                     "data_path": "action_result.parameter.ip_hostname",
                     "data_type": "string",
-                    "contains": [],
-                    "column_name": "ip_hostname",
+                    "column_name": "IP Hostname",
                     "column_order": 0
                 },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 1
+                    "column_name": "Status",
+                    "column_order": 1,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -803,14 +802,11 @@
                 "ip_hostname": {
                     "description": "Hostname/IP of the machine to list processes on",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "ip",
                         "host name"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0,
                     "name": "ip_hostname",
                     "id": 1,
@@ -825,14 +821,18 @@
                         "ip",
                         "host name"
                     ],
-                    "column_name": "ip_hostname",
+                    "column_name": "IP Hostname",
                     "column_order": 0
                 },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 1
+                    "column_name": "Status",
+                    "column_order": 1,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
                 },
                 {
                     "data_path": "action_result.message",
