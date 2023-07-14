@@ -753,6 +753,10 @@
                     "required": true,
                     "order": 0,
                     "name": "ip_hostname",
+                    "contains": [
+                        "ip",
+                        "host name"
+                    ],
                     "id": 1,
                     "param_name": "ip_hostname"
                 }
