@@ -2,7 +2,7 @@
 # Sandfly Security
 
 Publisher: Sandfly Security, Ltd.  
-Connector Version: 1.3.0  
+Connector Version: 1.4.0  
 Product Vendor: Sandfly Security  
 Product Name: Sandfly Security Agentless Linux Security  
 Product Version Supported (regex): ".\*"  
@@ -70,6 +70,8 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 [sandfly recon investigation](#action-sandfly-recon-investigation) - Run a Sandfly recon investigation  
 [list endpoints](#action-list-endpoints) - List all the endpoints/sensors configured on the device  
 [get system info](#action-get-system-info) - Get information about an endpoint  
+[list users](#action-list-users) - List the user accounts on a machine  
+[list processes](#action-list-processes) - List the running processes on a machine  
 
 ## action: 'test connectivity'
 Validate the asset configuration for connectivity using supplied configuration
@@ -330,4 +332,50 @@ action_result.data | string |  |
 action_result.summary | string |  |  
 action_result.message | string |  |  
 summary.total_objects | numeric |  |  
+summary.total_objects_successful | numeric |  |    
+
+## action: 'list users'
+List the user accounts on a machine
+
+Type: **investigate**  
+Read only: **True**
+
+List all user accounts on the specified system.
+
+#### Action Parameters
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**ip_hostname** |  required  | Hostname/IP of the machine to list user accounts | string |  `ip`  `host name` 
+
+#### Action Output
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.ip_hostname | string |  `ip`  `host name`  |  
+action_result.status | string |  |   success  failed 
+action_result.data | string |  |  
+action_result.summary | string |  |  
+action_result.message | string |  |  
+summary.total_objects | numeric |  |  
+summary.total_objects_successful | numeric |  |    
+
+## action: 'list processes'
+List the running processes on a machine
+
+Type: **investigate**  
+Read only: **True**
+
+#### Action Parameters
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**ip_hostname** |  optional  | Hostname/IP of the machine to list processes on | string |  `ip`  `host name` 
+
+#### Action Output
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.ip_hostname | string |  `ip`  `host name`  |  
+action_result.status | string |  |   success  failed 
+action_result.message | string |  |  
+summary.total_objects | numeric |  |  
 summary.total_objects_successful | numeric |  |  
+action_result.data | string |  |  
+action_result.summary | string |  |  
