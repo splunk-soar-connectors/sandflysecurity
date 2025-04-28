@@ -1,7 +1,7 @@
 # Sandfly Security
 
 Publisher: Sandfly Security, Ltd. \
-Connector Version: 1.4.0 \
+Connector Version: 1.4.1 \
 Product Vendor: Sandfly Security \
 Product Name: Sandfly Security Agentless Linux Security \
 Minimum Product Version: 5.5.0
