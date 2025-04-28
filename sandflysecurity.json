@@ -876,13 +876,5 @@
             },
             "versions": "EQ(*)"
         }
-    ],
-    "custom_made": true,
-    "directory": "sandflysecurity_2b671b5f-93c6-4173-9350-045d0b746ae9",
-    "version": 1,
-    "appname": "-",
-    "executable": "spawn3",
-    "disabled": false,
-    "copied_from_id": 185,
-    "copied_from_version": "1.4.0"
+    ]
 }
