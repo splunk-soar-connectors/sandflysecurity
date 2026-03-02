@@ -1,1 +1,2 @@
 **Unreleased**
+* Bugfix release to resolve issue with Sandfly REST API changes
