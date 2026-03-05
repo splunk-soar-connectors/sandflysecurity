@@ -1,6 +1,6 @@
 # File: sandflysecurity_connector.py
 #
-# Copyright (c) Sandfly Security, Ltd., 2023-2025
+# Copyright (c) Sandfly Security, Ltd., 2023-2026
 #
 # This unpublished material is proprietary to Recorded Future. All
 # rights reserved. The methods and techniques described herein are
