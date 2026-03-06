@@ -877,6 +877,14 @@
             "versions": "EQ(*)"
         }
     ],
+    "pip39_dependencies": {
+        "wheel": [
+            {
+                "module": "beautifulsoup4",
+                "input_file": "wheels/shared/beautifulsoup4-4.9.1-py3-none-any.whl"
+            }
+        ]
+    },
     "pip313_dependencies": {
         "wheel": [
             {
