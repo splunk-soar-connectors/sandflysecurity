@@ -881,7 +881,11 @@
         "wheel": [
             {
                 "module": "beautifulsoup4",
-                "input_file": "wheels/shared/beautifulsoup4-4.9.1-py3-none-any.whl"
+                "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
+            },
+            {
+                "module": "soupsieve",
+                "input_file": "wheels/py3/soupsieve-2.8.3-py3-none-any.whl"
             }
         ]
     },
@@ -889,7 +893,11 @@
         "wheel": [
             {
                 "module": "beautifulsoup4",
-                "input_file": "wheels/shared/beautifulsoup4-4.9.1-py3-none-any.whl"
+                "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
+            },
+            {
+                "module": "soupsieve",
+                "input_file": "wheels/py3/soupsieve-2.8.3-py3-none-any.whl"
             }
         ]
     }
