@@ -880,24 +880,16 @@
     "pip39_dependencies": {
         "wheel": [
             {
-                "module": "beautifulsoup4",
-                "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
-            },
-            {
-                "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.8.3-py3-none-any.whl"
+                "module": "requests",
+                "input_file": "wheels/py3/requests-2.32.5-py3-none-any.whl"
             }
         ]
     },
     "pip313_dependencies": {
         "wheel": [
             {
-                "module": "beautifulsoup4",
-                "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
-            },
-            {
-                "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.8.3-py3-none-any.whl"
+                "module": "requests",
+                "input_file": "wheels/py3/requests-2.32.5-py3-none-any.whl"
             }
         ]
     }
