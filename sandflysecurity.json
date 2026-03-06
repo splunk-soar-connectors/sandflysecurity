@@ -20,7 +20,7 @@
     "utctime_updated": "2025-04-28T20:38:42.142503Z",
     "package_name": "phantom_sandflysecurity",
     "main_module": "sandflysecurity_connector.py",
-    "min_phantom_version": "5.5.0",
+    "min_phantom_version": "6.3.0",
     "fips_compliant": false,
     "app_wizard_version": "1.0.0",
     "configuration": {
@@ -876,5 +876,13 @@
             },
             "versions": "EQ(*)"
         }
-    ]
+    ],
+    "pip313_dependencies": {
+        "wheel": [
+            {
+                "module": "beautifulsoup4",
+                "input_file": "wheels/shared/beautifulsoup4-4.9.1-py3-none-any.whl"
+            }
+        ]
+    }
 }
