@@ -878,23 +878,9 @@
         }
     ],
     "pip39_dependencies": {
-        "wheel": [
-            {
-                "module": "requests",
-                "input_file": "wheels/py3/requests-2.32.5-py3-none-any.whl"
-            }
-        ]
+        "wheel": []
     },
     "pip313_dependencies": {
-        "wheel": [
-            {
-                "module": "requests",
-                "input_file": "wheels/py3/requests-2.32.5-py3-none-any.whl"
-            },
-            {
-                "module": "charset_normalizer",
-                "input_file": "wheels/py313/charset_normalizer-3.4.5-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
-            }
-        ]
+        "wheel": []
     }
 }
