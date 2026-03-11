@@ -1,6 +1,6 @@
 # File: sandflysecurity_connector.py
 #
-# Copyright (c) Sandfly Security, Ltd., 2023-2025
+# Copyright (c) Sandfly Security, Ltd., 2023-2026
 #
 # This unpublished material is proprietary to Recorded Future. All
 # rights reserved. The methods and techniques described herein are
@@ -322,21 +322,21 @@ class SandflySecurityConnector(BaseConnector):
         for item in data_list:
             if item["active"] is True:
                 if b_type_directory is True and item["type"] == "directory":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
                 if b_type_file is True and item["type"] == "file":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
                 if b_type_incident is True and item["type"] == "incident":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
                 if b_type_log is True and item["type"] == "log":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
                 if b_type_policy is True and item["type"] == "policy":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
                 if b_type_process is True and item["type"] == "process":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
                 if b_type_recon is True and item["type"] == "recon":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
                 if b_type_user is True and item["type"] == "user":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
 
         # self.save_progress(t_sandfly_list)
 
@@ -448,21 +448,21 @@ class SandflySecurityConnector(BaseConnector):
         for item in data_list:
             if item["active"] is True:
                 if item["type"] == "directory":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
                 if item["type"] == "file":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
                 if item["type"] == "incident":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
                 if item["type"] == "log":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
                 if item["type"] == "policy":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
                 if item["type"] == "process":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
                 if item["type"] == "recon":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
                 if item["type"] == "user":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
 
         # self.save_progress(t_sandfly_list)
 
@@ -574,7 +574,7 @@ class SandflySecurityConnector(BaseConnector):
         for item in data_list:
             if item["active"] is True:
                 if item["type"] == "process":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
 
         # self.save_progress(t_sandfly_list)
 
@@ -686,7 +686,7 @@ class SandflySecurityConnector(BaseConnector):
         for item in data_list:
             if item["active"] is True:
                 if item["type"] == "file":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
 
         # self.save_progress(t_sandfly_list)
 
@@ -798,7 +798,7 @@ class SandflySecurityConnector(BaseConnector):
         for item in data_list:
             if item["active"] is True:
                 if item["type"] == "directory":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
 
         # self.save_progress(t_sandfly_list)
 
@@ -910,7 +910,7 @@ class SandflySecurityConnector(BaseConnector):
         for item in data_list:
             if item["active"] is True:
                 if item["type"] == "log":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
 
         # self.save_progress(t_sandfly_list)
 
@@ -1022,7 +1022,7 @@ class SandflySecurityConnector(BaseConnector):
         for item in data_list:
             if item["active"] is True:
                 if item["type"] == "user":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
 
         # self.save_progress(t_sandfly_list)
 
@@ -1134,7 +1134,7 @@ class SandflySecurityConnector(BaseConnector):
         for item in data_list:
             if item["active"] is True:
                 if item["type"] == "recon":
-                    t_sandfly_list.append(item["id"])
+                    t_sandfly_list.append(item["name"])
 
         # self.save_progress(t_sandfly_list)
 

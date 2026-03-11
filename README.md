@@ -1,10 +1,10 @@
 # Sandfly Security
 
-Publisher: Sandfly Security, Ltd. \
-Connector Version: 1.4.1 \
-Product Vendor: Sandfly Security \
-Product Name: Sandfly Security Agentless Linux Security \
-Minimum Product Version: 5.5.0
+Publisher: Sandfly Security, Ltd. <br>
+Connector Version: 1.4.2 <br>
+Product Vendor: Sandfly Security <br>
+Product Name: Sandfly Security Agentless Linux Security <br>
+Minimum Product Version: 6.3.0
 
 Sandfly Security app to gather information, initiate system scans and other actions on the Sandfly Server
 
@@ -20,25 +20,25 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration \
-[scan host](#action-scan-host) - Run a Sandfly investigation \
-[sandfly full investigation](#action-sandfly-full-investigation) - Run a full Sandfly investigation \
-[sandfly process investigation](#action-sandfly-process-investigation) - Run a Sandfly process investigation \
-[sandfly file investigation](#action-sandfly-file-investigation) - Run a Sandfly file investigation \
-[sandfly directory investigation](#action-sandfly-directory-investigation) - Run a Sandfly directory investigation \
-[sandfly log tamper investigation](#action-sandfly-log-tamper-investigation) - Run a Sandfly log tamper investigation \
-[sandfly user investigation](#action-sandfly-user-investigation) - Run a Sandfly user investigation \
-[sandfly recon investigation](#action-sandfly-recon-investigation) - Run a Sandfly recon investigation \
-[list endpoints](#action-list-endpoints) - List all the endpoints/sensors configured on the device \
-[get system info](#action-get-system-info) - Get information about an endpoint \
-[list users](#action-list-users) - List the user accounts on a machine \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration <br>
+[scan host](#action-scan-host) - Run a Sandfly investigation <br>
+[sandfly full investigation](#action-sandfly-full-investigation) - Run a full Sandfly investigation <br>
+[sandfly process investigation](#action-sandfly-process-investigation) - Run a Sandfly process investigation <br>
+[sandfly file investigation](#action-sandfly-file-investigation) - Run a Sandfly file investigation <br>
+[sandfly directory investigation](#action-sandfly-directory-investigation) - Run a Sandfly directory investigation <br>
+[sandfly log tamper investigation](#action-sandfly-log-tamper-investigation) - Run a Sandfly log tamper investigation <br>
+[sandfly user investigation](#action-sandfly-user-investigation) - Run a Sandfly user investigation <br>
+[sandfly recon investigation](#action-sandfly-recon-investigation) - Run a Sandfly recon investigation <br>
+[list endpoints](#action-list-endpoints) - List all the endpoints/sensors configured on the device <br>
+[get system info](#action-get-system-info) - Get information about an endpoint <br>
+[list users](#action-list-users) - List the user accounts on a machine <br>
 [list processes](#action-list-processes) - List the running processes on a machine
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity using supplied configuration
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -53,7 +53,7 @@ No Output
 
 Run a Sandfly investigation
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 Run a Sandfly investigation against the target host for the selected types.
@@ -96,7 +96,7 @@ summary.total_objects_successful | numeric | | |
 
 Run a full Sandfly investigation
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 Run a full Sandfly investigation for all process, file, directory, log, user, incident, policy and recon types.
@@ -123,7 +123,7 @@ summary.total_objects_successful | numeric | | |
 
 Run a Sandfly process investigation
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 Run a Sandfly investigation against the target system for the process type.
@@ -150,7 +150,7 @@ summary.total_objects_successful | numeric | | |
 
 Run a Sandfly file investigation
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 Run a Sandfly investigation against the target system for the file type.
@@ -177,7 +177,7 @@ summary.total_objects_successful | numeric | | |
 
 Run a Sandfly directory investigation
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 Run a Sandfly investigation against the target system for the directory type.
@@ -204,7 +204,7 @@ summary.total_objects_successful | numeric | | |
 
 Run a Sandfly log tamper investigation
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 Run a Sandfly investigation against the target system for the log type.
@@ -231,7 +231,7 @@ summary.total_objects_successful | numeric | | |
 
 Run a Sandfly user investigation
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 Run a Sandfly investigation against the target system for the user type.
@@ -258,7 +258,7 @@ summary.total_objects_successful | numeric | | |
 
 Run a Sandfly recon investigation
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 Run a Sandfly investigation against the target system for the recon type.
@@ -285,7 +285,7 @@ summary.total_objects_successful | numeric | | |
 
 List all the endpoints/sensors configured on the device
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -307,7 +307,7 @@ summary.total_objects_successful | numeric | | |
 
 Get information about an endpoint
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -332,7 +332,7 @@ summary.total_objects_successful | numeric | | |
 
 List the user accounts on a machine
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 List all user accounts on the specified system.
@@ -359,7 +359,7 @@ summary.total_objects_successful | numeric | | |
 
 List the running processes on a machine
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -384,7 +384,7 @@ ______________________________________________________________________
 
 Auto-generated Splunk SOAR Connector documentation.
 
-Copyright 2025 Splunk Inc.
+Copyright 2026 Splunk Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
