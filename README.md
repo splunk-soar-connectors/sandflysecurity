@@ -17,6 +17,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **Sandfly Server URL** | required | string | Sandfly Server URL |
 **Username** | required | string | Login Username |
 **Password** | required | password | Login Password |
+**verify_server_cert** | optional | boolean | Verify the Sandfly server certificate for HTTPS connections. Disabling verification exposes the configured username, password, and bearer tokens to on-path attackers |
 
 ### Supported Actions
 
