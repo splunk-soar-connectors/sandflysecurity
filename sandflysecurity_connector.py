@@ -146,7 +146,7 @@ class SandflySecurityConnector(BaseConnector):
             r = request_func(
                 url,
                 # auth=(username, password),  # basic authentication
-                verify=config.get("verify_server_cert", False),
+                verify=config.get("verify_server_cert", True),
                 **kwargs,
             )
         except Exception as e:
@@ -1612,7 +1612,12 @@ class SandflySecurityConnector(BaseConnector):
             headers["Accept"] = "application/json"
             headers["Content-Type"] = "application/json"
 
-            r2 = requests.post(login_url, verify=False, data=json.dumps(data), headers=headers)  # nosemgrep
+            r2 = requests.post(
+                login_url,
+                verify=config.get("verify_server_cert", True),
+                data=json.dumps(data),
+                headers=headers,
+            )
 
             if r2.status_code != 200:
                 return phantom.APP_ERROR

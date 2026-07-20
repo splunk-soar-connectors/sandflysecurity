@@ -47,6 +47,14 @@
             "order": 2,
             "name": "Password",
             "id": 2
+        },
+        "verify_server_cert": {
+            "description": "Verify the Sandfly server certificate for HTTPS connections. Disabling verification exposes the configured username, password, and bearer tokens to on-path attackers",
+            "data_type": "boolean",
+            "default": true,
+            "order": 3,
+            "name": "verify_server_cert",
+            "id": 3
         }
     },
     "actions": [
